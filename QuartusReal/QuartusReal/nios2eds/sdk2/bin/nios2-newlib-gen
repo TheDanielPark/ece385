@@ -1,0 +1,333 @@
+#! /bin/bash
+
+# set -x
+
+############################################################################
+#
+# Script to build a custom NIOS2 newlib from the sources provided by Altera.
+#
+# Copyright (c) 2018 Altera Corporation
+#
+#
+#
+#
+
+VERSION_STRING="Version 18.1 b625"
+SRCDIR="undefined"
+
+usage()
+{
+    echo
+    echo "Usage: `basename $0` [OPTIONS] blddir libdir"
+    echo
+    echo "This command is used to create a customized version of the Nios2 newlib" 
+    echo "libraries"
+    echo
+    echo "  blddir is the path to a temporary build directory, it will"
+    echo "    be created by this script, and may be removed afterwards"
+    echo
+    echo "  libdir is the path to the permanent library directory, it will"
+    echo "    be created by this script, and will contain the installed files"
+    echo
+    echo "OPTIONS are:"
+    echo "  -h, --help          Display this message"
+    echo "  -v, --version       Display the version of this script"
+    echo "      --srcdir <path> path to the newlib sources"
+    echo "                       srcdir defaults to:"
+    echo "                       ${SRCDIR}"
+    echo "      --log <logfile> log the newlib compilation details to the "
+    echo "                      specified log file"
+    echo "      --custom <opts> Compile newlib with the given options"
+    echo "      --jobs <n>      Run <n> jobs in parallel, default is 1"
+    echo "      --justnormalc   Just build the normal version of the C library"
+    echo "      --justsmallc    Just build the small version of the C library"
+    echo "      --no-multilib   Just build one variant of the C library"
+    echo "      --verbose       Display output to standard out"
+    echo
+    echo "For example:"
+    echo
+    echo "  `basename $0` --custom \"-O3\" ./build ./lib"
+    echo
+    echo
+    exit 1
+}
+
+die()
+{
+    echo "`basename $0`: $*" >>"$LOGFILE"
+    echo "`basename $0`: $*"
+    echo "See log file $LOGFILE for more details."
+    exit 1
+}
+
+check_env_var()
+{
+    local VAR_NAME=$1
+    local VAR="\$"$VAR_NAME
+    local VAR_VALUE=`eval "echo $VAR"`
+    if [ -z "$VAR_VALUE" ]; then
+        die "Variable $VAR_NAME not set"
+    fi
+}
+
+info()
+{
+    NOW=`date --utc +"%a %d %b %Y %H:%M:%S"`
+    EQUALS="=================================================================="
+    echo $EQUALS >>"$LOGFILE"
+    echo $NOW "$*" >>"$LOGFILE"
+    echo "$*"
+}
+
+check_command()
+{
+    if [ ${PIPESTATUS[0]} -eq 0 ]
+    then
+        info "$1 -> COMPLETE."
+    else
+        popd >/dev/null
+        die "Unable to $1"
+    fi
+}
+
+build_newlib()
+{
+    info "Configuring newlib to build a $1 C library in $BLDDIR/$1..."
+    mkdir -p "$BLDDIR/$1"
+    pushd "$BLDDIR/$1" >/dev/null
+
+    N2GNU_BUILD_NEWLIB="$1" STAGE_AS_WRAPPER="$STAGE_WRAPPER" STAGE_AR_WRAPPER="$STAGE_WRAPPER" STAGE_CC_WRAPPER="$STAGE_WRAPPER" STAGE_RANLIB_WRAPPER="$STAGE_WRAPPER" /bin/sh "$SRCDIR/configure" --prefix="$LIBDIR" --target=$TARGET 2>&1 | tee -a "$LOGFILE" >&3
+    check_command "Configure $1 newlib"
+
+    info "Compiling newlib for a $1 C library..."
+    N2GNU_BUILD_NEWLIB="$1" STAGE_AS_WRAPPER="$STAGE_WRAPPER" STAGE_AR_WRAPPER="$STAGE_WRAPPER" STAGE_CC_WRAPPER="$STAGE_WRAPPER" STAGE_RANLIB_WRAPPER="$STAGE_WRAPPER" make -j "$JOBS" all-target 2>&1 | tee -a "$LOGFILE" >&3
+    check_command "Compile $1 newlib"
+
+    info "Installing newlib for a $1 C library..."
+    N2GNU_BUILD_NEWLIB="$1" STAGE_AS_WRAPPER="$STAGE_WRAPPER" STAGE_AR_WRAPPER="$STAGE_WRAPPER" STAGE_CC_WRAPPER="$STAGE_WRAPPER" STAGE_RANLIB_WRAPPER="$STAGE_WRAPPER" make -j "$JOBS" install-target 2>&1 | tee -a "$LOGFILE" >&3
+    check_command "Install $1 newlib"
+
+    popd >/dev/null
+}
+
+
+DATE=`date +%Y-%m-%d-%H-%M-%S`
+
+USER_LOGFILE=
+LOGFILE="build-newlib.$DATE"
+
+check_env_var "SOPC_KIT_NIOS2"
+
+
+SRCDIR="$SOPC_KIT_NIOS2/bin/gnu/src/newlib-2.2"
+
+BLDDIR=
+LIBDIR=
+CUSTOM=
+JOBS=1
+JUSTNORMALC=
+JUSTSMALLC=
+NOMULTILIB=
+TARGET=nios2-elf
+VERBOSE=
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        --custom)
+            if [ $# -eq 1 ]
+            then
+                usage
+            fi
+            shift
+            CUSTOM="$1"
+            ;;
+        --srcdir)
+            if [ $# -eq 1 ]
+            then
+                usage
+            fi
+            shift
+            SRCDIR="$1"
+            ;;
+        -h|--help)
+            usage
+            ;;
+        --jobs)
+            if [ $# -eq 1 ]
+            then
+                usage
+            fi
+            shift
+            JOBS="$1"
+            ;;
+        --justnormalc)
+            JUSTNORMALC="yes"
+            ;;
+        --justsmallc)
+            JUSTSMALLC="yes"
+            ;;
+        --no-multilib)
+            NOMULTILIB="yes"
+            ;;
+        --verbose)
+            VERBOSE="yes"
+            ;;
+        -v|--version)
+            echo $VERSION_STRING
+            exit 1
+            ;;
+        --log)
+            if [ $# -eq 1 ]
+            then
+                usage
+            fi
+            shift
+            LOGFILE="$1"
+            USER_LOGFILE="yes"
+            ;;
+        --*)
+            usage
+            ;;
+        *)
+            if [ -z "$BLDDIR" ]
+            then
+                BLDDIR="$1"
+            elif [ -z "$LIBDIR" ]
+            then
+                LIBDIR="$1"
+            else
+                usage
+            fi
+            ;;
+    esac
+    shift
+done
+if [ -z "$LIBDIR" ]
+then
+    usage
+fi
+
+if [ ! -d "$SRCDIR" ]
+then
+   die "Source directory $SRCDIR not present"
+fi
+if [ -d "$BLDDIR" ]
+then
+    die "Build directory $BLDDIR already exists, remove it manually first"
+fi
+if [ -d "$LIBDIR" ]
+then
+    die "Library directory $LIBDIR already exists, remove it manually first"
+fi
+
+
+if [ -z "$VERBOSE" ]
+then
+    exec 3>/dev/null
+else
+    exec 3>&1
+fi
+
+mkdir -p "$BLDDIR"
+if [ ! -d "$BLDDIR" ]
+then
+    die "Unable to mkdir $BLDDIR"
+fi
+
+mkdir -p "$LIBDIR"
+if [ ! -d "$LIBDIR" ]
+then
+    die "Unable to mkdir $LIBDIR"
+fi
+
+# Use absolute path names
+pushd "$SRCDIR" >/dev/null
+SRCDIR="`pwd`"
+popd >/dev/null
+pushd "$BLDDIR" >/dev/null
+BLDDIR="`pwd`"
+popd >/dev/null
+pushd "$LIBDIR" >/dev/null
+LIBDIR="`pwd`"
+popd >/dev/null
+pushd "`dirname $LOGFILE`" >/dev/null
+LOGFILE="`pwd`/`basename $LOGFILE`"
+popd >/dev/null
+
+if [ -n "$(which cygwin1.dll 2>/dev/null)" ]; then
+	# Destroy PATH and rebuild minimally on windows for safety
+	# use cygwin make when building with cygwin
+	export PATH=/bin:$(dirname $(which nios2-elf-gcc))
+fi
+
+echo
+echo "Building Newlib may take a few minutes... Please be patient."
+echo
+echo "Newlib Source Dir:  $SRCDIR"
+echo "Newlib Build Dir:   $BLDDIR"
+echo "Newlib Install Dir: $LIBDIR"
+
+
+STAGE_WRAPPER=$BLDDIR/build-newlib-stage-wrapper
+rm -f "$STAGE_WRAPPER"
+cat >"$STAGE_WRAPPER" <<"EOF"
+#!/bin/bash
+#
+# A script to intercept and short-circuit the --print-multi-lib option
+#
+ORIGINAL_ARGS=$(echo $* | sed -e 's,/cygdrive/\([a-zA-Z]\)/,\1:/,g')
+CUSTOM=
+EOF
+
+if [ "x$CUSTOM" != "x" ]
+then
+    cat >>"$STAGE_WRAPPER" <<EOF
+if [ "x\$1" = "xnios2-elf-gcc" ]
+then
+    CUSTOM="$CUSTOM"
+fi
+EOF
+fi
+
+if [ "x$NOMULTILIB" != "x" ]
+then
+    cat >>"$STAGE_WRAPPER" <<"EOF"
+while [ $# -gt 0 ]
+do
+  case "$1" in
+      --print-multi-lib)
+          echo ".;"
+          exit 0
+          ;;
+      *)
+          ;;
+  esac
+  shift
+done
+EOF
+fi
+
+cat >>"$STAGE_WRAPPER" <<"EOF"
+eval $ORIGINAL_ARGS $CUSTOM
+EOF
+chmod +x "$STAGE_WRAPPER"
+
+info ""
+
+if [ -z "$JUSTNORMALC" ]
+then
+    build_newlib "smallc"
+fi 
+
+if [ -z "$JUSTSMALLC" ]
+then
+    build_newlib "normalc"
+fi
+
+# Remove the logfile if all goes well
+if [ -z "$USER_LOGFILE" ]
+then
+    rm $LOGFILE
+fi
+
+

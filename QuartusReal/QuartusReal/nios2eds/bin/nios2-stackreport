@@ -1,0 +1,8 @@
+#!/bin/bash
+IFS=
+FILEPATH=${0//\\/\/}
+_this_script=$(cd ${FILEPATH%[/]*} && echo $(pwd 2>/dev/null)/${FILEPATH##*/})
+_this_script_dir=$(dirname ${_this_script})
+export SOPC_KIT_NIOS2=${_this_script_dir/%\/bin}
+. "${_this_script_dir}/sh_pl.sh" $@
+

@@ -1,0 +1,73 @@
+Quartus Prime Archive log --	D:/QuartusReal/ECE 385/lab7_tmp_archive.qarlog
+
+Archive:	D:/QuartusReal/ECE 385/lab7_tmp_archive.qar
+Date:		Fri Mar 13 14:46:36 2020
+Quartus Prime		18.1.0 Build 625 09/12/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+D:/Downloads/lab7 (1).sdc
+D:/Downloads/lab7.sdc
+D:/Downloads/lab7.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc.qsys
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc.sopcinfo
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/lab7_soc.cmp
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/lab7_soc.debuginfo
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/lab7_soc.qip
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/lab7_soc.regmap
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/lab7_soc.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_avalon_sc_fifo.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.sdc
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_avalon_st_pipeline_base.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_merlin_arbitrator.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_merlin_master_agent.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_merlin_master_translator.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_merlin_slave_agent.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_merlin_slave_translator.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_reset_controller.sdc
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_reset_controller.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_reset_synchronizer.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/altera_std_synchronizer_nocut.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_KEY.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_SW.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_irq_mapper.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_led.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_avalon_st_adapter.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_cmd_demux.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_cmd_mux.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_router.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_router_002.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_rsp_demux.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_mm_interconnect_0_rsp_mux.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu.sdc
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_debug_slave_tck.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_ociram_default_contents.mif
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_rf_ram_a.mif
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_rf_ram_b.mif
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_nios2_gen2_0_cpu_test_bench.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_onchip_memory2_0.hex
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_onchip_memory2_0.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_sdram.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_sdram_pll.v
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab7/lab7_soc/synthesis/submodules/lab7_soc_sysid_qsys_0.v
+D:/QuartusReal/ECE 385/lab7.qpf
+D:/QuartusReal/ECE 385/lab7.qsf
+d:/quartusreal/quartus/bin64/assignment_defaults.qdf
+	======= Total: 56 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Fri Mar 13 14:46:40 2020
+Source archive file:	D:/QuartusReal/ECE 385/lab7_tmp_archive.qar
+Archive was extracted into	E:/2020 spring/lab 7/danielp7_masakis2/
+		 - successfully.

@@ -1,0 +1,24 @@
+µC/OS-II Licensing Terms
+
+
+Even if µC/OS-II is provided in source form, µC/OS-II is NOT freeware NOR open 
+source software.  
+
+You are NOT allowed to distribute the source code for µC/OS-II without written
+consent from Micriµm.
+
+You need to obtain an 'Object Code Distribution License' to embed µC/OS-II in 
+a product that is sold with the intent to make a profit. 
+
+You need to contact Micriµm for licensing details:
+
+Micrium, Inc.
+949 Crestview Circle
+Weston, FL 33327
+
++1 954 217 2036
++1 954 217 2037
+
+www.micrium.com
+
+Do you agree to these conditions?

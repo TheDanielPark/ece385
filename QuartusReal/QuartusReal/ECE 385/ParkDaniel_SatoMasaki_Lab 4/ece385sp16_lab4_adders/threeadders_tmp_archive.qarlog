@@ -1,0 +1,28 @@
+Quartus Prime Archive log --	D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/threeadders_tmp_archive.qarlog
+
+Archive:	D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/threeadders_tmp_archive.qar
+Date:		Fri Feb 14 15:10:30 2020
+Quartus Prime		18.1.0 Build 625 09/12/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/HexDriver.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/carry_lookahead_adder.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/carry_select_adder.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/fourbit_cla.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/fourbit_cra.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/full_adder.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/lab4_adders_toplevel.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/ripple_adder.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/threeadders.qpf
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/threeadders.qsf
+d:/quartusreal/quartus/bin64/assignment_defaults.qdf
+	======= Total: 11 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Fri Feb 14 15:10:31 2020
+Source archive file:	D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/ece385sp16_lab4_adders/threeadders_tmp_archive.qar
+Archive was extracted into	E:/danielp7_masakis2_threeadders/
+		 - successfully.

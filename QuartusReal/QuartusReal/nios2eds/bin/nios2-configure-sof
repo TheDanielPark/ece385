@@ -1,0 +1,269 @@
+#! /bin/bash
+
+# set -x
+
+# Guess values for system-dependent variables and create Makefiles.
+# Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
+#
+# Copyright (C) 2004-2005 Altera Corporation
+#
+# This configure script is free software; the Free Software Foundation
+# gives unlimited permission to copy, distribute and modify it.
+#
+# Altera gives unlimited permission to copy, distribute and modify
+# this script.
+
+cygpath=/bin/cygpath
+
+# We must scan the command line arguments twice.  The first time we are
+# just trying to find out the location of generated_app.sh - this contains
+# a pointer to suggested values for some of the arguments.  The second time
+# we actually use the arguments
+for ii in 0 1 ; do 
+  # Set the default argument values
+  cable=AUTOMATIC
+  device=AUTOMATIC
+  soffile=.
+  debug=no
+
+  # The second time round the loop we must load up the suggested argument
+  # values if there are any
+  if test "$ii" = "1" ; then
+    # If it exists then include a shell fragment which tells us where the
+    # system project is.
+    if test -f $directory/generated_app.sh ; then
+      . $directory/generated_app.sh
+
+      # Include a shell script fragment derived from the STF/PTF files.
+      # This provides the location of the PTF file which might be useful
+	  # later.
+      if test -f $SYSTEM_CONFIG_DIR/system_description/generated.sh ; then
+        . $SYSTEM_CONFIG_DIR/system_description/generated.sh
+      fi
+    fi
+  fi
+
+  directory=.
+
+  ac_prev=
+  for ac_option
+  do
+
+    # If the previous option needs an argument, assign it.
+    if test -n "$ac_prev"; then
+      eval "$ac_prev=\$ac_option"
+      ac_prev=
+      continue
+    fi
+
+    case "$ac_option" in
+    -*=*) ac_optarg=`echo "$ac_option" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+    *) ac_optarg= ;;
+    esac
+
+    case "$ac_option" in
+
+    -h | -help | --help | --hel | --he)
+      cat << EOF
+Description: This tool configures an Altera configurable part.  If no explicit
+SOF file is provided then it will try and work out the correct file to use.
+
+Usage: nios2-configure-sof [-h/--help] [-C/--directory <dir name>]
+       [-c/--cable <cable name>] [-d/--device <device index>]
+	   [ <filename.sof> ]
+
+The options may be specified in any order, but this is the order in which they
+are used by nios2-configure-sof.
+
+ -h/--help                   Prints this message.
+
+ -C/--directory <dir name>   Change to this directory before running
+
+ -c/--cable <cable name>     Specifies which JTAG cable to use (not needed if
+                             you only have one cable).
+ -d/--device <device index>  Specifies in which device you want to look for the
+                             Nios II CPU (1 = device nearest TDI etc.)
+
+ <filename.sof>              The SOF file you want to download
+
+If you have exactly one cable attached then nios2-configure-sof will use this 
+cable by default.  If you have more than one cable attached then you must
+specify one. Use \`jtagconfig\` to find out which cables you have available.
+
+If a SOF file is specified, then that file is configured into the part.  
+If no file is specified, or if the specified filename does not have a path
+associated with it then the tool will search for matching SOF files, first
+in the current directory and then in the directory which contains the PTF
+file for the project in the current directory.
+EOF
+      exit 0 ;;
+
+    -C | --directory)
+      ac_prev=directory ;;
+    --directory=*)
+      directory="$ac_optarg" 
+      ;;
+
+    -c | --cable)
+      ac_prev=cable ;;
+    --cable=*)
+      cable="$ac_optarg" ;;
+    -b | -b2)
+      cable="ByteBlaster" ;;
+    -u)
+      cable="USB-Blaster" ;;
+
+    -d | --device)
+      ac_prev=device ;;
+    --device=*)
+      device="$ac_optarg" ;;
+
+    --debug)
+      debug=yes ;;
+
+    -*) { echo "nios2-configure-sof: error: $ac_option: invalid option; use --help to show usage" 1>&2; exit 16; }
+      ;;
+
+    *)
+      if test "x$soffile" != "x."; then
+        { echo "nios2-configure-sof: error: can only configure one file at a time" 1>&2; exit 16; }
+      fi
+      if test -x $cygpath; then
+        ac_option=`$cygpath -u "$ac_option"`
+      fi
+
+      soffile="$ac_option"
+      ;;
+
+    esac
+  done
+
+  if test -n "$ac_prev"; then
+    { echo "nios2-download: error: missing argument to --`echo $ac_prev | sed 's/_/-/g'`" 1>&2; exit 16; }
+  fi
+
+  if test -x $cygpath; then
+    directory=`$cygpath -u "$directory"`
+  fi
+done
+
+if test "x$ptf" != x; then
+  if test -x $cygpath; then
+    ptf=`$cygpath -u "$ptf"`
+	ptfdir=`dirname "$ptf"`
+  fi
+fi
+
+if test "x$debug" = "xyes" ; then
+  echo "soffile=$soffile"
+  echo "directory=$directory"
+  echo "ptfdir=$ptfdir"
+  echo "cable=$cable"
+  echo "device=$device"
+fi
+
+
+function search_for_sof
+{
+  searchdir=$1
+  pattern=$2
+
+  # Search the specified directory for a files matching the pattern specified
+  echo "in $searchdir"
+  files=`(cd $searchdir ; echo $pattern)`
+
+  # Return if no matches to a wildcard
+  if test "x$files" = "x*.sof"; then
+    echo "  No matching files"
+    return
+  fi
+
+  # Set soffile to point to the first match and count the matches
+  count=0
+  for file in $files ; do
+    echo "  $file"
+	count=$(($count+1))
+	if test "x$soffile" = "x."; then
+	  soffile=$searchdir/$file
+	fi
+  done
+
+  # If more than one file matches then fail
+  if test "$count" != "1"; then
+    echo "More than one SOF file available - please pick one"
+    exit 8
+  fi
+}
+
+
+# If the SOF filename supplied contained a path component then don't try and
+# be clever, just use it (in combination with the directory)
+if test "x`dirname $soffile`" != "x." ; then
+  # If the SOF filename is relative then make it relative to the base
+  # directory (if one was specified)
+  if test "x$soffile" != xNONE; then
+    if test "x`echo $soffile | cut -c1-1`" != "x/"; then
+      soffile=$directory/$soffile
+    fi
+  fi
+
+else
+  if test "x$soffile" != "x."; then
+    sofpattern=$soffile
+  else
+    sofpattern="*.sof"
+  fi
+
+  soffile=.
+
+  echo "Searching for SOF file:"
+
+  # If no SOF file specified then use one from the current directory
+  # if one exists
+  eval search_for_sof $directory $sofpattern
+
+  # If still no SOF file available then look in the same directory as
+  # the PTF file as there is likely to be one there
+  if test "x$soffile" = "x."; then
+    eval search_for_sof $ptfdir $sofpattern
+  fi
+fi
+
+if test "x$soffile" = "x."; then
+  echo "nios2-configure-sof: Can't find a suitable SOF file, please specify one"
+  exit 12
+fi
+
+if ! test -f $soffile ; then
+  echo "nios2-configure-sof: unable to open SOF file \"$soffile\""
+  exit 12
+fi
+
+echo
+
+arglist="--mode=jtag"
+
+if test "x$cable" != "xAUTOMATIC"; then
+  arglist="$arglist --cable='$cable'"
+fi
+
+# quartus_pgm on windows doesn't understand cygwin pathnames, so convert to
+# a format it does understand
+if test -x $cygpath; then
+  soffile=`$cygpath -m "$soffile"`
+fi
+
+if test "x$device" = "xAUTOMATIC"; then
+  arglist="$arglist -o p\\;$soffile"
+else
+  arglist="$arglist -o p\\;$soffile@$device"
+fi
+
+if test "x$debug" = "xyes" ; then
+  echo "quartus_pgm $arglist"
+fi
+
+eval quartus_pgm --no_banner $arglist
+rc=$?
+
+exit $rc

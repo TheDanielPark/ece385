@@ -1,0 +1,38 @@
+Quartus Prime Archive log --	D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/slc3_tmp_archive.qarlog
+
+Archive:	D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/slc3_tmp_archive.qar
+Date:		Fri Mar 06 14:20:14 2020
+Quartus Prime		18.1.0 Build 625 09/12/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/ISDU.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/Mem2IO.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/SLC3_2.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/lab6_toplevel.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/memory_contents.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/slc3.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/test_memory.sv
+D:/QuartusReal/ECE 385/Updated_ECE385_lab6_provided_Spring_2018/tristate.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab5/HexDriver.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab5/synchronizer.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/ALU.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/ClockFile.sdc
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/datapath.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/regbit1.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/regbit12.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/regbit16.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/regfile.sv
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/slc3.qpf
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/slc3.qsf
+D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/testbench_lc3.sv
+d:/quartusreal/quartus/bin64/assignment_defaults.qdf
+	======= Total: 21 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Fri Mar 06 14:20:16 2020
+Source archive file:	D:/QuartusReal/ECE 385/danielp7_masakis2_lab6/slc3_tmp_archive.qar
+Archive was extracted into	E:/2020 spring/lab 6/danielp7_masakis2/
+		 - successfully.

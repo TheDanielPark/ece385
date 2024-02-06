@@ -1,0 +1,598 @@
+#! /bin/bash
+
+# set -x
+
+# Guess values for system-dependent variables and create Makefiles.
+# Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
+#
+# Copyright (C) 2004 Altera Corporation
+#
+# This configure script is free software; the Free Software Foundation
+# gives unlimited permission to copy, distribute and modify it.
+#
+# Altera gives unlimited permission to copy, distribute and modify
+# this script.
+
+cygpath=/bin/cygpath
+
+# We must scan the command line arguments twice.  The first time we are
+# just trying to find out the location of generated_app.sh - this contains
+# a pointer to suggested values for some of the arguments.  The second time
+# we actually use the arguments
+elffile=NONE
+
+function search_for_jdi
+{
+  searchdir=$1
+  pattern=$2
+
+  # Search the specified directory for a files matching the pattern specified
+
+  #  echo "in $searchdir"
+  files=`(cd $searchdir ; echo $pattern)`
+
+  # Return if no matches to a wildcard
+  if test "x$files" = "x*.jdi"; then
+     # echo "  No matching files in search for *.jdi"
+    return
+  fi
+
+  # Set jdifile to point to the first match and count the matches
+  count=0
+  for file in $files ; do
+   #   echo "  $file"
+	count=$(($count+1))
+	if test "x$jdifile" = "x."; then
+	  jdifile=$searchdir/$file
+	fi
+  done
+
+  # If more than one file matches then fail
+  if test "$count" != "1"; then
+      echo "More than one jdi file available - ignoring."
+    jdifile=.
+  fi
+}
+
+# These two variables are set outside the loop because they need to be used
+# in the second pass.
+jdi=AUTOMATIC
+cpu_name=AUTOMATIC
+debug=no
+nios2_instance=AUTOMATIC
+
+for ii in 0 1 ; do 
+  # Set the default argument values
+  mode=AUTOMATIC
+  cable=AUTOMATIC
+  device=AUTOMATIC
+  nios2_debug_core=yes
+  sidp=
+  id=
+  timestamp=
+  signal_pid=
+  wait=NONE
+  go=no
+  stop=no
+  reset_target=no
+  accept_bad_sysid=no
+  tcpport=none
+  tcpdebug=no
+  write_gmon=
+  thread_vars=NONE
+  fs2console=no
+  kitdir=
+  internal_nios2=
+
+  # If an elf file was specified then we must use the path from that to
+  # find generated_app.sh, else it will be pointed to by --directory
+  if test "x$elffile" = xNONE; then
+    configdir=$directory
+  else
+    configdir=`dirname "$elffile"`
+  fi
+
+  # The second time round the loop we must load up the suggested argument
+  # values if there are any
+  if test "$ii" = "1" ; then
+    
+   # Only search if instance is not specified
+   if test "x$nios2_instance" = "xAUTOMATIC"; then
+
+    # Begin actual search for nios2_instance in JDI file.
+    if ! test "x$cpu_name" = "xAUTOMATIC"; then
+      if ! test -f $jdi ; then
+        if test "x$debug" = "xyes" ; then
+          echo "nios2-download: Could not find .jdi file at $jdi.  Skipping search."
+        fi
+      else
+        if test "x$debug" = "xyes" ; then
+          echo "nios2-download: Searching for instance id in $jdi with cpu name: $cpu_name"
+        fi
+            
+        # A jdi file path was passed in, or
+        # found a single .jdi file in the same directory as the ptf
+        # Will now try to parse it for the cpu_debug_module instance ID.
+        #
+        # First, check that we find one and only one line matching out
+        # search string in the jdi file.  If we get 0 or >1, do not use
+        # it.
+        #
+        # We get the <node> line out of the jdi file, print each 'word'
+        # out, and separate each word by "=".  If the first field after
+        # the separation matches "instance_id", then we use the 2nd field
+        # as the value we want.  Finally use sed to strip the quotes.
+
+        number_of_matches=`awk /node.*$cpu_name:\(the_\)?$cpu_name/{print} $jdi | wc -l`
+        if ! test $number_of_matches -eq 1; then
+          if test "x$debug" = "xyes" ; then
+            if test $number_of_matches -eq 0; then
+              echo "nios2-download: Found no matches in .jdi for $cpu_name, not setting nios2_instance from .jdi file"
+            else
+              echo "nios2-download: Found more than one match in .jdi for $cpu_name, not setting nios2_instance from .jdi file"
+            fi
+          fi
+        else
+          echo nios2-download: Searching for JTAG Node Instance for $cpu_name in $jdi
+          jdi_instance_id=`awk /node.*$cpu_name:\(the_\)?$cpu_name/{print} $jdi | \
+              awk '{ for(i=1;i <=NF;i++) {print $i}}' | \
+                awk -F "=" '$1 = /instance_id/{print $2}' | sed 's/\"//g'`
+          if [ -n $jdi_instance_id ] ; then
+             nios2_instance=$jdi_instance_id
+          fi
+        fi
+        if test "x$debug" = "xyes" ; then
+          echo "nios2-download: Found and set nios2 instance to : $nios2_instance"
+        fi
+      fi
+    else
+      if test "x$debug" = "xyes" ; then
+        echo "nios2-download: No cpu_name found or passed in; not scanning for nios2_instance id in .jdi file."
+      fi
+    fi # cpu_name test
+   fi  # search only if --instance is not specified
+  fi  # loop through only on second pass
+
+  elffile=NONE
+  directory=.
+
+  ac_prev=
+  for ac_option
+  do
+
+    # If the previous option needs an argument, assign it.
+    if test -n "$ac_prev"; then
+      eval "$ac_prev=\$ac_option"
+      ac_prev=
+      continue
+    fi
+
+    case "$ac_option" in
+    -*=*) ac_optarg=`echo "$ac_option" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+    *) ac_optarg= ;;
+    esac
+
+    case "$ac_option" in
+
+    -h | -help | --help | --hel | --he)
+      cat << EOF
+Description: This tool prepares a target system for debugging, it checks
+that the hardware and software are compatible, downloads the software and
+optionally makes the target processor run the downloaded code.
+
+Usage: nios2-download [-h/--help] [-C/--directory <dir name>]
+       [-c/--cable <cable name>] [-d/--device <device index>]
+       [-i/--instance <instance>] [-r/--reset-target]
+       [-s/--sidp <address> -I/--id <id> -t/--timestamp <timestamp>]
+       [--accept-bad-sysid] [-w/--wait <seconds>] [-g/--go] [--stop]
+	   [--tcpport <port> | auto] [--write-gmon <file>]
+           [--jdi <file>] [--cpu_name <name>] 
+	   [<filename>]
+
+The options may be specified in any order, but this is the order in which they
+are used by nios2-download.
+
+ -h/--help                   Prints this message.
+
+ -C/--directory <dir name>   Change to this directory before running
+
+ -c/--cable <cable name>     Specifies which JTAG cable to use (not needed if
+                             you only have one cable).
+ -d/--device <device index>  Specifies in which device you want to look for the
+                             Nios II CPU (1 = device nearest TDI etc.)
+ -i/--instance <instance>    Specifies the INSTANCE value of the Nios II CPU
+                             JTAG debug module (auto-detected if you specify
+                             an ELF file or use --directory to point to one)
+
+ -r/--reset-target           Reset the target SOPC system before use.
+
+ -s/--sidp <address>         Base-address of System ID peripheral on target
+                             This base-address must be specified in hex (0x...)
+ -I/--id <system-id-value>   Unique ID code for target system
+ -t/--timestamp <time-stamp> Timestamp for target-system (when last generated)
+    --accept-bad-sysid       Continue even if the system ID comparison fails
+
+ <filename.elf>              An ELF file to download to the target
+
+ -w/--wait <seconds>         Wait for time specified before starting processor
+ -g/--go                     Run processor from entry point after downloading.
+    --stop                   Stop processor (leave it in a paused state).
+    --tcpport <port> | auto  Listen on specified TCP port for a connection from
+                             GDB (with "auto" a free port will be used).
+    --write-gmon <file>      Write profiling data to the file specified when the
+                             target exits.
+    --jdi <file>            Specify which .jdi file to read the INSTANCE
+                             value of the Nios II CPU JTAG debug module from.
+                             (if not specified, will look in the same folder
+                             as the .ptf file, as specified in generated.sh)
+    --cpu_name <name>        CPU module name to use when trying to scan for
+                             INSTANCE value from the .jdi file.  Will use the
+                             name specified in generated.sh if it is not passed
+                             in.
+                    NOTE:    nios2-download needs a .jdi file and a cpu_name
+                             to search for the INSTANCE value.  This can be
+                             supplied via the command line, or will be searched
+                             for with information from generated.sh
+
+If you specify the --go option then the target processor will be started
+before this tool exits.  If --go is not specified but a file is downloaded or
+the target processor needs to be reset then it will be left in the paused
+state.  Otherwise the target processor state will be left unchanged unless
+--stop is specified (in which case it will be paused).
+
+Return codes are: 0 for success; 1 if the system ID did not match; 2 if no
+Nios II CPUs are found; a return code of 4 or more indicates an error which
+will need manual intervention to solve.
+EOF
+      # What is this
+      #if test -n "$ac_help"; then
+      #  echo "--enable and --with options recognized:$ac_help"
+      #fi
+      exit 0 ;;
+
+    -V | --version)
+      echo "nios2-download version unknown"
+      exit 0 ;;
+
+    --ram)
+      mode=RAM ;;
+
+    -C | --directory)
+      ac_prev=directory ;;
+    --directory=*)
+      directory="$ac_optarg" 
+      ;;
+
+    -c | --cable)
+      ac_prev=cable ;;
+    --cable=*)
+      cable="$ac_optarg" ;;
+
+    -d | --device)
+      ac_prev=device ;;
+    --device=*)
+      device="$ac_optarg" ;;
+
+    -i | --instance)
+      ac_prev=nios2_instance ;;
+    --instance=*)
+      nios2_instance="$ac_optarg" ;;
+  
+    -s | --sidp)
+      ac_prev=sidp ;;
+    --sidp=*)
+      sidp="$ac_optarg" ;;
+
+    -I | --id)
+      ac_prev=id ;;
+    --id=*)
+      id="$ac_optarg" ;;
+
+    -t | --timestamp)
+      ac_prev=timestamp ;;
+    --timestamp=*)
+      timestamp="$ac_optarg" ;;
+
+    --accept-bad-sysid)
+      accept_bad_sysid=yes ;;
+
+    --signal-pid)
+      { echo "nios2-download: error: $ac_option: deprecated option; use --help to show usage" 1>&2; exit 16; }
+      ac_prev=signal_pid ;;
+    --signal-pid=*)
+      { echo "nios2-download: error: $ac_option: deprecated option; use --help to show usage" 1>&2; exit 16; }
+      signal_pid="$ac_optarg" ;;
+
+    -w | --wait | -p | --pause)
+      ac_prev=wait ;;
+    --wait=* | --pause=*)
+      wait="$ac_optarg" ;;
+
+    -g | --go)
+      go=yes ;;
+
+    --stop)
+      stop=yes ;;
+
+    --tcpport)
+      ac_prev=tcpport ;;
+    --tcpport=*)
+      tcpport="$ac_optarg" ;;
+
+    --internal-nios2)
+      internal_nios2=yes ;;
+
+    --tcpdebug)
+      tcpdebug=yes ;;
+
+    --write-gmon)
+      ac_prev=write_gmon ;;
+    --write-gmon=*)
+      write_gmon="$ac_optarg" ;;
+
+    --thread-vars)
+      ac_prev=thread_vars ;;
+    --thread-vars=*)
+      thread_vars="$ac_optarg" ;;
+
+    --console | --console=1)
+      { echo "nios2-download: error: $ac_option: deprecated option; use --help to show usage" 1>&2; exit 16; }
+      fs2console=yes ;;
+
+    --kitdir)
+      { echo "nios2-download: error: $ac_option: deprecated option; use --help to show usage" 1>&2; exit 16; }
+      ac_prev=kitdir ;;
+    --kitdir=*)
+      kitdir="$ac_optarg" ;;
+
+    -r | --reset-target)
+      reset_target=yes ;;
+
+    --debug)
+      debug=yes ;;
+
+    --jdi)
+      ac_prev=jdi ;;
+    --jdi=*)
+      jdi="$ac_optarg" ;;
+  
+    --cpu_name)
+      ac_prev=cpu_name;;
+    --cpu_name=*)
+      cpu_name="$ac_optarg" ;;
+  
+    #-v | -verbose | --verbose)
+    #  verbose=yes ;;
+
+    -*) { echo "nios2-download: error: $ac_option: invalid option; use --help to show usage" 1>&2; exit 16; }
+      ;;
+
+    *)
+      if test "x$elffile" != xNONE; then
+        { echo "nios2-download: error: wrapper script can only download one file at a time" 1>&2; exit 16; }
+      fi
+      if test -x $cygpath; then
+        ac_option=`$cygpath -u "$ac_option"`
+      fi
+
+      elffile="$ac_option"
+      ;;
+
+    esac
+  done
+
+  if test -n "$ac_prev"; then
+    { echo "nios2-download: error: missing argument to --`echo $ac_prev | sed 's/_/-/g'`" 1>&2; exit 16; }
+  fi
+
+  if test -x $cygpath; then
+    directory=`$cygpath -u "$directory"`
+  fi
+
+  # If the elf filename is relative then make it relative to the base
+  # directory (if one was specified)
+  if test "x$elffile" != xNONE; then
+    if test "x`echo $elffile | cut -c1-1`" != "x/"; then
+      elffile=$directory/$elffile
+    fi
+  fi
+done
+
+# Interpret the PID signalling filename relative to the config directory
+# if test "x$signal_pid" != x; then
+#   if test -x $cygpath; then
+#     signal_pid=`$cygpath -u "$signal_pid"`
+#   fi
+
+#   if test "x`echo $signal_pid | cut -c1-1`" != "x/"; then
+#     signal_pid=$configdir/$signal_pid
+#   fi
+# fi
+
+# If there is no debug core then we can't do anything
+if test "x$nios2_debug_core" != "xyes"; then
+  cat 1>&2 << EOF
+The ptf file describing this project indicates that the target processor does
+not contain a debug core.  nios2-download requires a debug core to access the
+target processor.  Please use SOPC builder to add a debug core to your
+processor and then try again (or use a different example design).
+EOF
+  exit 16
+fi
+
+
+# At present we only support RAM mode so defaulting to it if nothing was
+# specified doesn't seem like such a bad idea.
+
+if test "x$mode" = xAUTOMATIC; then
+  mode=RAM
+fi
+
+# Need to specify --kitdir as otherwise nios2-gdb-server-fs2 can't launch the
+# console
+# if test "x$fs2console" = "xyes"; then
+#   if test "x$kitdir" = "x"; then
+#     { echo "nios2-download: Must specify --kitdir if --console is enabled" 1>&2; exit 16; }
+#   fi
+
+#   if test -x $cygpath; then
+#     kitdir=`$cygpath -u "$kitdir"`
+#   fi
+# fi
+
+
+rc=20
+
+case "$mode" in
+  RAM)
+    # TODO: error if sidp specified without id and timestamp
+
+    # TODO: can't specify more than one of --go, --stop and --tcpport
+
+    if test "x$go" = "xyes"; then
+      if test "x$tcpport" != "xnone"; then
+        { echo "nios2-download: error: can't specify both --go and --tcpport" 1>&2; exit 16; }
+      fi
+    fi
+
+
+    if test "x$cable" != "xAUTOMATIC"; then
+      arglist="$arglist --cable '$cable'"
+      arglist2="$arglist2 '--cable=$cable'"
+    fi
+
+    if test "x$device" != "xAUTOMATIC"; then
+      arglist="$arglist --device $device"
+      arglist2="$arglist2 --device=$device"
+    fi
+
+    if test "x$nios2_instance" != "xAUTOMATIC"; then
+      arglist="$arglist --instance $nios2_instance"
+      arglist2="$arglist2 --instance=$nios2_instance"
+    fi
+
+    if test "x$sidp" != "x"; then
+      arglist="$arglist --sidp $sidp"
+      if test "x$id" != "x"; then
+        arglist="$arglist --id $id"
+      fi
+      if test "x$timestamp" != "x"; then
+        arglist="$arglist --timestamp $timestamp"
+      fi
+    fi
+
+    if test "x$accept_bad_sysid" = "xyes"; then
+      arglist="$arglist --accept-bad-sysid"
+    fi
+
+    # if test "x$signal_pid" != "x"; then
+    #   arglist="$arglist --signal-pid '$signal_pid'"
+    # fi
+
+    if test "x$wait" != "xNONE"; then
+      arglist="$arglist --wait $wait"
+    fi
+
+    if test "x$reset_target" = "xyes"; then
+      arglist="$arglist --reset-target"
+    fi
+
+    if test "x$go" = "xyes"; then
+      arglist="$arglist --go"
+    fi
+
+    if test "x$stop" = "xyes"; then
+      arglist="$arglist --stop"
+    fi
+
+    if test "x$tcpport" != "xnone"; then
+      if test "x$fs2console" != "xyes"; then
+        # Use the built in GDB server unless the FS2 console is required
+
+        arglist="$arglist --tcpport $tcpport"
+        
+        if test "x$tcpdebug" = "xyes"; then
+          arglist="$arglist --tcpdebug"
+        fi
+      else
+        # Need to leave the processor stopped as otherwise FS2 server can't attach
+        arglist="$arglist --tcpport none --stop"
+      fi
+    else
+      arglist="$arglist --tcpport none"
+    fi
+
+    #remove this because it was not ported on windows
+    #arglist="$arglist --write-pid $configdir/nios2-download.pid"
+
+    if test "x$write_gmon" != "x"; then
+      arglist="$arglist --write-gmon '$write_gmon'"
+    fi
+
+    if test "x$thread_vars" != "xNONE"; then
+      arglist="$arglist --thread-vars '$thread_vars'"
+    fi
+
+    if test "x$elffile" != "xNONE"; then
+      if test -x $cygpath; then
+      	 # Use mixed style path so that this works with and without 
+      	 # a cygwin linked toolchain. This is required to support a
+      	 # mingw based toolchain.
+         elffile=$(${cygpath} -m ${elffile})
+      fi
+      srecfile="$elffile.srec"
+
+      # TODO: catch errors from this
+      nios2-elf-objcopy $elffile -O srec $srecfile
+
+      arglist="$arglist $srecfile"
+    fi
+
+    if test "x$internal_nios2" = "xyes"; then
+      arglist="$arglist --internal-nios2"
+    fi
+
+    if test "x$debug" = "xyes" ; then
+      echo "nios2-gdb-server $arglist"
+    fi
+
+    eval nios2-gdb-server $arglist
+    rc=$?
+
+    if test "x$srecfile" != "x" ; then
+      rm $srecfile
+    fi
+
+    # if test "x$fs2console" = "xyes"; then
+    #   if test "x$tcpport" != "xnone"; then
+    #     	xrc="x$rc"
+    #     	if test "$xrc" = "x1" ; then
+    #       if test "x$accept_bad_sysid" = "xyes" ; then
+    #     	    xrc="x0"
+    #     	  fi
+    #     	fi
+
+    #     if test "$xrc" = "x0" ; then
+    #       arglist2="$arglist2 --connect-reset=0 --tcpport=$tcpport"
+
+    #       if test "x$tcpdebug" = "xyes"; then
+    #         arglist2="$arglist2 --verbosity=4"
+    #       fi
+
+    #       arglist2="$arglist2 --kitdir=$kitdir --console=1"
+
+    #       if test "x$debug" = "xyes" ; then
+    #         echo "nios2-gdb-server-fs2 $arglist2"
+    #       fi
+
+    #       echo calling nios2-gdb-server-fs2 with $arglist2
+    #       eval nios2-gdb-server-fs2 $arglist2
+    #     fi
+    #   fi
+    # fi
+
+  ;;
+esac
+
+exit $rc
+

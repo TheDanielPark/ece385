@@ -1,0 +1,19 @@
+module ALU (input logic [15:0] R1, R2, input logic[1:0] ALUK,
+					output logic[15:0] masaki
+);
+	always_comb
+		begin
+			case (ALUK)
+			
+				2'b00: //ADD
+					masaki = R1 + R2;
+				2'b01: //AND
+					masaki = R1 & R2;
+				2'b10: //NOT
+					masaki = ~R1;
+				2'b11: //PASSA
+					masaki = R1;
+					
+			endcase
+		end
+endmodule

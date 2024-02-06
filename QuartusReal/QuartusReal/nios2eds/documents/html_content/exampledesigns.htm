@@ -1,0 +1,534 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<style>
+<!--
+h2
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:14.0pt;
+	font-family:Arial;
+	color:black}
+div.Section1
+	{page:Section1;}
+ li.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+-->
+</style>
+<base target="main">
+</head>
+
+<body link="#0000FF" vlink="#800080" alink="#FF0000" bgcolor="#FFFFFF">
+
+<h1><font face="Arial">Design Examples</font></h1>
+<p><font face="Arial">The Nios&nbsp;II Embedded Design Suite (EDS) includes hardware and software 
+design examples that work on 
+<a target="_blank" href="http://www.altera.com/products/devkits/kit-dev_platforms.jsp">Altera 
+	development boards</a>. Each design example highlights the usage of one or more features. Source code
+is provided for you to examine and use as the starting point for your own embedded designs. 
+Visit
+<a target="_blank" href="http://www.altera.com/support/examples/nios2/exm-nios2.html">
+Nios&nbsp;II Embedded Processor Design Examples</a> for additional and revised 
+designs. </font></p>
+<p><font face="Arial">Click a link to jump ahead:</font></p>
+<ol>
+  <li><font face="Arial"><a target="_self" href="#Hardware">Hardware Design Examples</a></font></li>
+  <li><font face="Arial"><a target="_self" href="#Software">Software Design Examples</a></font></li>
+  <li><font face="Arial"><a target="_self" href="#Matrix">Design Support Matrix </a>- Not all software examples run on all hardware
+  example designs. Refer to this section for details.</font></li>
+</ol>
+<h2><a name="Hardware">Hardware</a> Design Examples</h2>
+<p><font face="Arial">The hardware design examples illustrate how to combine a Nios&nbsp;II processor,
+memory, and peripherals into a practical embedded system. 
+The design files for the Applications Processor MMU Design are provided under 
+<i>&lt;Nios&nbsp;II EDS install path&gt;</i><b>/examples/verilog/</b><i>&lt;niosII_cycloneIII_3c120 or 
+	niosII_stratixIV_4sgx230&gt;</i><b>/applications_processor_mmu_design</b>. 
+	The design files for the Triple Speed Ethernet Design are provided under 
+	<i>&lt;Nios&nbsp;II EDS install path&gt;</i><b>/examples/verilog/</b><i>&lt;niosII_cycloneIII_3c120 or 
+		niosII_stratixIV_4sgx230&gt;</i><b>/triple_speed_ethernet_design</b>. 
+		The Ethernet Standard design is available on 
+		the <a target="_blank" href="http://www.altera.com/support/examples/nios2/exm-nios2.html">
+	Nios&nbsp;II Embedded Processor Design Examples</a> page on the Altera website.
+<p>
+The table below describes
+the content of each hardware design. For further details, refer to the <b>
+readme.txt</b> file in each design directory.</font></p>
+<table x:str border="0" cellpadding="0" cellspacing="0" style="border-collapse:
+ collapse">
+  <tr height="17" style="height:12.75pt">
+    <td colspan="4" height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; border: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="3" face="Arial">Hardware Design Examples Specifications</font></td>
+  </tr>
+  <tr height="34" style="height: 25.9pt">
+    <td height="34" style="height: 25.9pt; font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="3" face="Arial">&nbsp;</font></td>
+    <td style="font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial" size="3" color="#FF0000"><a target="_self" href="#TripleSpeedEthernetDesign">Triple Speed Ethernet Design</a></font></td>
+    <td style="font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial" size="3" color="#FF0000"><a target="_self" href="#ApplicationsProcessorMMUDesign">Applications Processor MMU Design</a></font></td>
+    <td style="font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial" size="3" color="#FF0000"><a target="_self" href="#EthernetStandardDesign">Ethernet Standard Design</a></font></td>
+  </tr>
+  <tr height="34" style="height: 25.9pt">
+    <td height="34" style="height: 25.9pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Development Kit Support (1)</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">EP3C120<br>4SGX230</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">EP3C120<br>4SGX230</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">EP3C120<br>4SGX230<br>EP3C25</font></td>
+  </tr>
+  <tr height="45" style="height:33.75pt">
+    <td height="45" style="height: 33.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Nios&nbsp;II Core</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Nios&nbsp;II/f<br>32 KB i-cache<br>32 KB d-cache<br>Hardware Multiply</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Nios&nbsp;II/f with MMU<br>32 KB i-cache<br>32 KB d-cache<br>Hardware Multiply</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Nios&nbsp;II/f<br>32 KB i-cache<br>32 KB d-cache</font></td>
+  </tr>
+  <tr height="45" style="height:33.75pt">
+    <td height="45" style="height: 33.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">JTAG Debug Module</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" >
+    <font size="1" face="Arial">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+  </tr>
+  <tr height="30" style="height:22.5pt">
+    <td height="30" style="height: 22.5pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Tightly Coupled Memory</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">&nbsp;
+    </td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1 KB</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">&nbsp</font></td>
+  </tr>
+  <tr height="30" style="height:22.5pt">
+    <td height="30" style="height: 22.5pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">On-Chip RAM</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">8 KB</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">8 KB</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">&nbsp;</font></td>
+  </tr>
+  <tr height="34" style="height:25.5pt">
+    <td height="34" style="height: 25.5pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Off-Chip RAM Interface</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1"> </font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">8 MB</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">1 MB</font></td>
+  </tr>
+  <tr height="34" style="height:25.5pt">
+    <td height="34" style="height: 25.5pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">CFI Flash Memory Interface</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">64 MB</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">64 MB</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">SDRAM Controller</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">(2)</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">(2)</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">SG-DMA Controller</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">2</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">2</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">JTAG UART</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">1</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">UART</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">&nbsp;</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Timer</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">2</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="19" style="height: 14.25pt">
+    <td height="19" style="height: 14.25pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">TSE MAC</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">1</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="19" style="height: 14.25pt">
+    <td height="19" style="height: 14.25pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Ethernet Interface</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">LED PIO</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td height="17" style="height: 12.75pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Push-Button PIO</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="34" style="height:25.5pt">
+    <td height="34" style="height: 25.5pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">LCD Screen Interface</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1"> </font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1"> </font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">&nbsp;</font></td>
+  </tr>
+  <tr height="34" style="height:25.5pt">
+    <td height="34" style="height: 25.5pt; font-weight: 700; font-family: Arial, sans-serif; text-align: left; vertical-align: middle; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver">
+    <font face="Arial">Performance Counter</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font size="1"> </font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="34" style="height:25.5pt">
+    <td height="34" style="height: 25.5pt; font-weight: 700; font-family: Arial, sans-serif; 
+    	text-align: left; vertical-align: middle; white-space: normal; color: windowtext; 
+    	font-size: 10.0pt; font-style: normal; text-decoration: none; 
+    	border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; 
+    	border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; 
+    	padding-right: 1px; padding-top: 1px; background: silver">
+    		<font face="Arial">System ID Peripheral</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; 
+    	vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; 
+    	font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; 
+    	border-right: .5pt solid windowtext; border-top: medium none; 
+    	border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; 
+    	padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; 
+    	vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; 
+    	font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; 
+    	border-right: .5pt solid windowtext; border-top: medium none; 
+    	border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; 
+    	padding-top: 1px">
+    <font size="1">Yes</font></td>
+    <td style="font-size: 8.0pt; font-family: Arial, sans-serif; text-align: center; 
+    	vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; 
+    	font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; 
+    	border-right: .5pt solid windowtext; border-top: medium none; 
+    	border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; 
+    	padding-top: 1px">
+    <font face="Arial">Yes</font></td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td colspan="4" height="17" style="height: 12.75pt; font-family: Arial, sans-serif; white-space: normal; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; border: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <ol>
+      <li><font face="Arial">
+      	Each design example supports one or more of the following kits:
+      	<ul>
+      		<li> Stratix IV GX FPGA Development Kit (4SGX230)  </li>
+      		<li> Altera Embedded Systems Development Kit, Cyclone III Edition (EP3C120)  </li>
+      		<li> Nios II Embedded Evaluation Kit, Cyclone III Edition (EP3C25)  </li>
+      		</ul>
+      </font></li>
+      <li><font face="Arial">
+      	This parameter varies with the target board. Refer to the design for 
+      	details.
+      	</font></li>
+      </ol>
+    </td>
+  </tr>
+</table>
+<blockquote>
+<h3><a name="TripleSpeedEthernetDesign"><font face="Arial">Triple Speed Ethernet Design</font></a></h3>
+<p><font face="Arial">
+This design runs on an Altera development board. It showcases many of the advanced features of the Nios&nbsp;II processor, Triple Speed Ethernet and Scatter-Gather DMA.</font></p>
+<h3><a name="ApplicationsProcessorMMUDesign"><font face="Arial">Applications Processor MMU Design</font></a></h3>
+<p><font face="Arial">
+This design runs on an Altera development board. It showcases many of the advanced features of the Nios&nbsp;II processor with the MMU feature, Triple Speed Ethernet and Scatter-Gather DMA. Full-featured operating systems such as Linux can run on this design.</font></p>
+<h3><a name="EthernetStandardDesign"><font face="Arial">Ethernet Standard Design</font></a></h3>
+<p><font face="Arial">
+This design is provided to showcase the Nios&nbsp;II Ethernet Standard design running 
+on Altera development boards. This simple, straightforward design highlights many of the features of the Nios&nbsp;II 
+processor, Triple Speed Ethernet and Scatter-Gather DMA.  
+</font></p>
+</blockquote>
+<h2 dir="ltr"><font face="Arial"><a name="Software">Software</a> Design Examples</font></h2>
+<p><font face="Arial">The software design examples demonstrate how to write
+programs that take advantage of various Nios&nbsp;II processor features. Each example provides
+its design files and <b>readme.txt</b> documentation file in a directory under <b>&lt;<i>Nios 
+II EDS install path</i>&gt;/examples/software</b>.
+The design examples 
+are provided as project templates in the Nios&nbsp;II Software Build Tools for 
+Eclipse,
+and as command-line examples for the Nios&nbsp;II Software Build Tools.
+<p>
+To create a software example in the Nios&nbsp;II Software Build Tools for 
+Eclipse, 
+use the <b>Nios&nbsp;II Application and BSP from Template</b> command, 
+and choose the desired project template.</font></p>
+<p><font face="Arial">A list of the software design examples is provided below.
+For more information about each example design, refer to the corresponding <b>readme.txt</b> file.</font></p>
+<ul>
+  <li><font face="Arial"><b>Hello World </b>- The &quot;Hello World&quot;
+  program based on a hosted
+  C environment</font>.</li>
+  <li><font face="Arial"><b>Blank Project </b>- A C/C++ 
+  project with no C files</font>.</li>
+  <li><b><font face="Arial">Board Diagnostic</font></b><font face="Arial"> -
+  Exercises most of the peripherals on the Altera development board</font>.</li>
+  <li><font face="Arial"><b>Count Binary </b>- Displays a count pattern on the
+  Altera development board LEDs, 7-segment display, and LCD display. Detects
+  button presses using an interrupt service routine.</font></li>
+  <li><font face="Arial"><b>Hello Alt_main</b> - Demonstrates using a
+  free-standing (i.e. non-hosted) C environment
+  with
+  manual driver initialization</font>.</li>
+	<li><font face="Arial"><b>Hello MicroC/OS-II</b> - &quot;Hello World&quot; based on the
+  MicroC/OS-II RTOS.</font></li>
+	<li><font face="Arial"><b>Hello World Small</b> - &quot;Hello World&quot; program with
+  the smallest possible memory footprint. Demonstrates using standard compiler
+  options to reduce memory footprint.</font></li>
+	<li><b><font face="Arial">Memory Test</b> - Writes and reads
+  RAM and flash memories.</font></li>
+	<li><b><font face="Arial">Memory Test Small</b> - Memory Test program with the smallest 
+		possible memory footprint.</font></li>
+	<li><b><font face="Arial">Simple Socket</font></b><font face="Arial"><b> Server 
+	</b>- A telnet application based on the sockets interface provided by the NicheStack 
+	TCP/IP Stack - Nios&nbsp;II Edition running on MicroC/OS-II. This example accompanies the
+	<i><a target="_blank" href="http://www.altera.com/literature/tt/tt_nios2_tcpip.pdf">
+	Using the NicheStack TCP/IP Stack Nios&nbsp;II Edition Tutorial</a></i>.</font><font face="Arial">&nbsp; </font></li>
+	<li><font face="Arial"><b>Web Server</b> - A web server based on the sockets
+  API provided by the NicheStack TCP/IP Stack - 
+	Nios&nbsp;II Edition running on MicroC/OS-II. This 
+    example demonstrates remote configuration over Ethernet and control of 
+    various board components over Ethernet.</font></li>
+</ul>
+<h2><font face="Arial"><a name="Matrix">Design Support Matrix</a></font></h2>
+<p><font face="Arial">Certain software design examples can execute only on
+specific hardware design examples. For example, the web server software example
+works only on hardware designs that include an Ethernet interface. The
+matrix below defines which software examples can execute on which hardware
+designs.</font></p>
+<table x:str border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 690" height="337">
+  <tr height="34" style="height:25.5pt">
+    <td style="height: 34; width: 138; text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: bottom; white-space: nowrap; border: medium none; padding-left: 1px; padding-right: 1px; padding-top: 1px">&nbsp;</td>
+    <td style="width: 108; font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" height="35">
+    Triple Speed Ethernet Design</td>
+    <td style="width: 108; font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" height="35">
+    Application Processor MMU Design (2)</td>
+    <td style="width: 108; font-weight: 700; font-family: Arial, sans-serif; text-align: center; white-space: normal; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; vertical-align: bottom; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" height="35">
+    Ethernet Standard Design</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 19; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Hello World</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr>
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Blank Project</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Board Diagnostic</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Count Binary</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Hello Freestanding</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Hello MicroC/OS&nbsp;II</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr>
+    <td style="font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Hello World Small</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr>
+    <td style="height: 16; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Memory Test</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="16">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr>
+    <td style="height: 16; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Memory Test Small</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="16">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Simple Socket Server</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    </td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Simple Socket Server TSE (1)</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">&nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">&nbsp;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Web Server</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    </td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td style="height: 18; font-weight: 700; font-family: Arial, sans-serif; color: windowtext; font-size: 10.0pt; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px; background: silver" width="138">
+    Web Server TSE (1)</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">
+    &diams;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">&nbsp;</td>
+    <td style="text-align: center; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: Arial; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="108" height="18">&nbsp;</td>
+  </tr>
+  <tr height="17" style="height:12.75pt">
+    <td colspan="4" height="17" style="height: 12.75pt; width: 729; font-family: Arial, sans-serif; white-space: normal; color: windowtext; font-size: 10.0pt; font-weight: 400; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; border: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+    <ol>
+    	<font face="Arial">
+      <li>These software examples are available as Nios&nbsp;II Software Build Tools command-line examples and as templates in the Nios&nbsp;II Software Build Tools for Eclipse. They are not available as Nios&nbsp;II IDE templates.</li>
+      <li>The Nios&nbsp;II&nbsp;EDS software examples do not run on the 
+      	Applications Processor MMU Design. The software examples are based on 
+      	the HAL, which does not support the MMU. The Applications Processor 
+      	MMU Design requires a full-featured operating system, such as Linux.</li>
+    	</font>
+    </ol>
+    </td>
+  </tr>
+</table>
+<p><font face="Arial" size="2">© 2010 Altera Corporation - Last updated 2 July 2010
+<!--webbot bot="Timestamp" endspan i-checksum="37961" --></font></p>
+
+</body>
+
+</html>

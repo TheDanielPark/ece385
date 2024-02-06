@@ -1,0 +1,176 @@
+# The plugs library is a lightweight network-communication software
+# component.  Adapter hardware (for example, the LAN-91c111 or CS8900) 
+# can support the plugs library by supporting a few low-level
+# routines.
+#
+# The plugs library itself provides application programs with a
+# reasonably full-featured API for performing network communication
+# tasks. In particular, plugs supports opening, using, and managing
+# UDP and TCP/IP network connections.
+
+   CLASS altera_plugs_library
+   {
+      ASSOCIATED_FILES 
+      {
+         Add_Program = "default";
+         Edit_Program = "default"; 
+         Generator_Program = "--none--";
+      }
+      SDK_GENERATION 
+      {
+        SDK_FILES 1
+        {
+           cpu_architecture        = "nios";
+           toolchain               = "gnu";
+           sdk_files_dir           = "sdk";
+        } 
+        SDK_FILES 2
+        {
+           cpu_architecture        = "nios2";
+           toolchain               = "gnu";
+           sdk_files_dir           = "sdk";
+        } 
+      }
+      USER_INTERFACE 
+      {
+         USER_LABELS 
+         {
+            name = "Altera Plugs TCP/IP Networking Library";
+            description = "Lightweight, RTOS-independent network API";
+            technology = "Network";
+         }
+         LINKS
+         {
+            LINK help
+            {
+               title="Plugs Library Reference";
+               url="http://www.altera.com/literature/manual/mnl_plugs.pdf";
+            }
+         }
+         WIZARD_UI default
+         {
+			title="Altera Plugs TCP/IP Library";
+            CONTEXT 
+            {
+				WSA="WIZARD_SCRIPT_ARGUMENTS";
+               CONSTANTS = "WIZARD_SCRIPT_ARGUMENTS/CONSTANTS";
+            }
+            GROUP 
+            {
+               align = "left";
+               COMBO
+               {
+                  title = "Maximum number of adapters: ";
+				  editable = true;
+				  values = "1,2,4,8";
+				  tooltip = "Select or type the maximum number of physical network adaptors to support";
+				  DATA
+				  {
+	                 $CONSTANTS/CONSTANT PLUGS_ADAPTER_COUNT/value = "$";
+				  }
+               }
+               COMBO 
+               {
+                  title = "Maximum number of plugs: ";
+				  editable = true;
+				  values = "1,2,5,10,20";
+				  tooltip = "Select or type the maximum number of plugs (sockets) to support";
+                  DATA 
+                  {
+					  $CONSTANTS/CONSTANT PLUGS_PLUG_COUNT/value = "$";
+				  }
+               }
+               CHECK 
+               {
+                  title = "Run at interrupt level.";
+                  DATA 
+                  {
+                     $CONSTANTS/CONSTANT PLUGS_IRQ/value = "$";
+                  }
+               }
+               CHECK 
+               {
+                  title = "Support for outgoing DNS lookups.";
+                  DATA 
+                  {
+                     $CONSTANTS/CONSTANT PLUGS_DNS/value = "$";
+                  }
+               }
+               CHECK 
+               {
+                  title = "Respond to ICMP echo (ping) requests.";
+                  DATA 
+                  {
+                     $CONSTANTS/CONSTANT PLUGS_PING/value = "$";
+                  }
+               }
+               CHECK 
+               {
+                  title = "Support for TCP connections in or out.";
+                  DATA 
+                  {
+                     $CONSTANTS/CONSTANT PLUGS_TCP/value = "$";
+                  }
+               }
+               CHECK 
+               {
+                  title = "Include debugging routines.";
+                  DATA 
+                  {
+                     $CONSTANTS/CONSTANT PLUGS_DEBUG/value = "$";
+                  }
+               }
+            }
+         }
+      }
+      SOFTWARE_DEFAULTS
+      {
+         class = "altera_plugs_library";
+         class_version = "7.08181";
+         WIZARD_SCRIPT_ARGUMENTS 
+         {
+            CONSTANTS 
+            {
+               CONSTANT PLUGS_PLUG_COUNT
+               {
+                  value = "5";
+                  comment = "Maximum number of plugs";
+               }
+               CONSTANT PLUGS_ADAPTER_COUNT
+               {
+                  value = "2";
+                  comment = "Maximum number of adapters";
+               }
+               CONSTANT PLUGS_DNS
+               {
+                  value = "1";
+                  comment = "Have routines for DNS lookups";
+               }
+               CONSTANT PLUGS_PING
+               {
+                  value = "1";
+                  comment = "Respond to icmp echo (ping) messages";
+               }
+               CONSTANT PLUGS_TCP
+               {
+                  value = "1";
+                  comment = "Support tcp in/out connections";
+               }
+               CONSTANT PLUGS_IRQ
+               {
+                  value = "1";
+                  comment = "Run at interrupte level";
+               }
+               CONSTANT PLUGS_DEBUG
+               {
+                  value = "1";
+                  comment = "Support debug routines";
+               }
+            }
+         }
+         SYSTEM_BUILDER_INFO 
+         {
+            Is_Enabled = "1";
+         }
+      }
+   }

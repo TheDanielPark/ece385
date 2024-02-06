@@ -1,0 +1,460 @@
+#!/bin/bash
+
+############################################################
+#                                                          #
+# Copyright (c) 2010, 2012 Altera Corporation              #
+# All Rights Reserved.                                     #
+#                                                          #
+# Exit with 0 on success, 1 on failure.                    #
+# Errors and warnings sent to stderr.                      #
+# Normal messages sent to stdout.                          #
+############################################################
+
+# Don't separate on whitespace so that spaces in path will work
+DEFAULT_IFS="${IFS}"
+IFS=
+
+# If there are backslashes in the script name, make them slashes
+SLASHPATH=${0//\\/\/}
+
+# Just the name of the script, without the path
+PN=${SLASHPATH##*/}
+
+# On Windows?
+if [ -n "${COMSPEC}" ]; then
+    # On Cygwin?
+    if [ -n "$(which cygpath 2>/dev/null)" ]; then
+        _IS_CYGWIN=1
+    fi
+fi
+
+# SLASHPATH may only be ./${PN}, for instance.  We want the full path to ${PN}
+_this_script=$(cd ${SLASHPATH%[/]*} && echo $(pwd 2>/dev/null)/${SLASHPATH##*/})
+# _ACDS_ROOT becomes the full path to ${PN}
+_ACDS_ROOT=${_this_script/\/nios2eds\/sdk2\/bin\/${PN}}
+
+unset SLASHPATH
+unset _this_script
+
+if [ ! -d "${_ACDS_ROOT}/nios2eds" ]; then
+    echo "${_ACDS_ROOT}/nios2eds not found. Invalid or corrupt ACDS Install" 1>&2
+    exit 1
+fi
+
+if [ -z "${QUARTUS_ROOTDIR_OVERRIDE}" ]; then
+    if [ ! -d "${_ACDS_ROOT}/quartus" ]; then
+        echo "${_ACDS_ROOT}/quartus not found. Invalid or corrupt ACDS Install" 1>&2
+        exit 1
+    fi
+fi
+
+if [ "${_IS_CYGWIN}" = "1" ]; then
+    _ACDS_ROOT="$(cygpath -m "${_ACDS_ROOT}" 2>/dev/null)"
+fi
+
+unset _IS_CYGWIN
+
+# Path to the default BSP Tcl script.
+default_tcl="${_ACDS_ROOT}/nios2eds/sdk2/bin/bsp-set-defaults.tcl"
+default_lwhal_tcl="${_ACDS_ROOT}/nios2eds/sdk2/bin/lwhal-set-defaults.tcl"
+
+# Globals
+declare -a create_update_options
+declare -a default_tcl_options
+sopc_arg=
+sopc_design_file=
+log_fname=
+first_log_fname=
+second_log_fname=
+
+# Routine to display error messages to stderr.
+err() {
+    echo "$*" 1>&2
+}
+
+usage() {
+    print_cmd=$1
+    extended_help=$2
+
+    $print_cmd
+    $print_cmd "Usage: $PN <bsp-type> <bsp-dir> [<sopc>] [--<option>]*"
+    $print_cmd
+    $print_cmd "This utility produces a BSP of type <bsp-type> in <bsp-dir>."
+    $print_cmd "If the BSP doesn't exist, it is created.  If the BSP already exists,"
+    $print_cmd "it is updated to be consistent with the associated SOPC Builder system."
+    $print_cmd
+    $print_cmd "For HAL based BSPs, the default Tcl script is used to set the following system-dependent settings:"
+    $print_cmd "  STDIO character device"
+    $print_cmd "  System timer device"
+    $print_cmd "  Default linker memory"
+    $print_cmd "  Bootloader enabled/disabled"
+    $print_cmd "If the BSP already exists, these system-dependent settings will be overwritten."
+
+    $print_cmd "The default HAL Tcl script is located at:"
+    $print_cmd "  $default_tcl"
+
+    $print_cmd "For Lightweight HAL based BSPs, the default Tcl script is used to set the following system-dependent settings:"
+    $print_cmd "  Default linker memory"
+    $print_cmd "If the BSP already exists, these system-dependent settings will be overwritten."
+
+    $print_cmd "The default Lightweight HAL Tcl script is located at:"
+    $print_cmd "  $default_lwhal_tcl"
+
+    $print_cmd
+    $print_cmd "When creating a new BSP, this utility runs:"
+    $print_cmd "  nios2-bsp-create-settings     Creates file called settings.bsp in <bsp-dir>, and generates files into <bsp-dir>"
+
+    $print_cmd
+    $print_cmd "When updating an existing BSP, this utility runs:"
+    $print_cmd "  nios2-bsp-update-settings     Updates file called settings.bsp in <bsp-dir>, and generates files into <bsp-dir>"
+    $print_cmd
+    $print_cmd
+    $print_cmd "Required arguments:"
+    $print_cmd "  <bsp-type>  BSP of type <bsp-type>."
+    $print_cmd "              This argument is ignored when updating a BSP."
+    $print_cmd "              This argument is case insensitive."
+    if [ $extended_help = "false" ]; then
+        $print_cmd "              To query for available BSP types, please use the --extended-help option."
+    else
+        $print_cmd "              Querying for available BSP types, please wait a moment..."
+        export types=`nios2-bsp-create-settings --type=? || {
+            err "$PN: nios2-bsp-create-settings --type=? failed"
+            exit 1
+            }`
+        $print_cmd "              $types"
+    fi
+    $print_cmd
+    $print_cmd "  <bsp-dir>   Path to the BSP directory.  Use . to get the current directory."
+    $print_cmd
+    $print_cmd "Optional arguments:"
+    $print_cmd "  <sopc>      Path to SOPC Builder .sopcinfo or .swinfo file or its directory."
+    $print_cmd "              If omitted, <sopc> defaults to the current directory when"
+    $print_cmd "              creating a BSP, but is not used for a BSP update."
+    $print_cmd "              If <sopc> is specified, it is used to construct the --sopc"
+    $print_cmd "              option of nios2-bsp-create-settings/nios2-bsp-update-settings."
+    $print_cmd "              If a directory is specified for <sopc>, there must be one"
+    $print_cmd "              .sopcinfo or .swinfo in the directory (.sopcinfo is chosen first)."
+    $print_cmd "              In releases of Nios II EDS before 8.0, a .sopc file was allowed"
+    $print_cmd "              for the <sopc> argument but this is no longer supported."
+    $print_cmd "              Instead, re-generate your system in SOPC Builder (version 8.0"
+    $print_cmd "              or later) to create a .sopcinfo file."
+    $print_cmd
+    $print_cmd "  --<option>  Options may be provided to override defaults."
+    $print_cmd "              By default, options are passed to nios2-bsp-create-settings or "
+    $print_cmd "              nios2-bsp-update-settings."
+    $print_cmd
+    $print_cmd "              The following options are passed to the default Tcl script."
+    $print_cmd "              (Note that the -- prefix is stripped when passed on):"
+    $print_cmd "                --default_stdio <device>|none|DONT_CHANGE"
+    $print_cmd "                     Specifies stdio device."
+    $print_cmd "                --default_sys_timer <device>|none|DONT_CHANGE"
+    $print_cmd "                     Specifies system timer device."
+    $print_cmd "                --default_memory_regions DONT_CHANGE"
+    $print_cmd "                     Existing memory regions will not be overwritten with"
+    $print_cmd "                     default memory regions. Only use this option when"
+    $print_cmd "                     updating an existing BSP."
+    $print_cmd "                --default_sections_mapping <region>|DONT_CHANGE"
+    $print_cmd "                     Specifies the memory region for the default sections."
+    $print_cmd "                --use_bootloader 0|1|DONT_CHANGE"
+    $print_cmd "                     Specifies whether a bootloader is required or not."
+    $print_cmd "              The value \"DONT_CHANGE\" prevents associated settings from"
+    $print_cmd "              changing their current value."
+}
+
+# Called when exiting for any reason.
+cleanup() {
+    # Combine 1st and 2nd log files if either present.
+    [[ -r "$first_log_fname" || -r "$second_log_fname" ]] && {
+        rm -f "$log_fname" || {
+            err "$PN: Can't remove --log filename $log_fname."
+            exit 1
+        }
+
+        [[ -r "$first_log_fname" ]] && {
+            cat "$first_log_fname" >>"$log_fname" || {
+                err "$PN: Can't add $first_log_fname to --log filename $log_fname."
+                exit 1
+            }
+
+            rm -f $first_log_fname
+        }
+
+        [[ -r "$second_log_fname" ]] && {
+            cat "$second_log_fname" >>"$log_fname" || {
+                err "$PN: Can't add $second_log_fname to --log filename $log_fname."
+                exit 1
+            }
+
+            rm -f $second_log_fname
+        }
+    }
+}
+
+# Call cleanup routine when exiting for any reason.
+trap cleanup EXIT
+
+# Return path of SOPC Builder design file.
+# Must be called with the sopc_arg as a parameter.
+# Sets the global sopc_design_file as the return value.
+set_sopc_design_file() {
+    local sopc_design_dir
+
+    if [[ -f "$1" ]]; then
+        # User specified an SOPC Builder design file so just use it.
+        sopc_design_file="$1"
+
+        [[ -r $sopc_design_file ]] || {
+            err "$PN: Can't read SOPC design file $sopc_design_file"
+            exit 1
+        }
+    else
+        # Default to PWD if no directory name specified.
+        sopc_design_dir="."
+
+        [[ "$1" ]] && {
+            # Interpret sopc argument as a directory name.
+            sopc_design_dir="$1"
+
+            [[ -d "$sopc_design_dir" ]] || {
+                err "$PN: SOPC design argument $1 isn't a directory or a file"
+                exit 1
+            }
+        }
+
+        # Give preference to .sopcinfo files because they are
+        # guaranteed to match the SOPC Builder system RTL.
+        # Find the .sopcinfo files in the sopc design dir.
+        local sopcinfo_files=$(ls $sopc_design_dir/*.sopcinfo 2>/dev/null)
+        [[ -n "$sopcinfo_files" ]] && {
+            for arg in $sopcinfo_files; do
+                [[ "$sopc_design_file" ]] && {
+                    err "$PN: Found multiple .sopcinfo files in $sopc_design_dir directory."
+                    err "$PN: Specify desired .sopcinfo file on the command line."
+                    exit 1
+                }
+
+                sopc_design_file="$arg"
+            done
+
+            echo "$PN: Using SOPC design file $sopc_design_file found in $sopc_design_dir"
+            return
+        }
+
+        # Also allow .swinfo files.
+        # Find the .swinfo files in the sopc design dir.
+        local swinfo_files=$(ls $sopc_design_dir/*.swinfo 2>/dev/null)
+        [[ -n "$swinfo_files" ]] && {
+            for arg in $swinfo_files; do
+                [[ "$sopc_design_file" ]] && {
+                    err "$PN: Found multiple .swinfo files in $sopc_design_dir directory."
+                    err "$PN: Specify desired .swinfo file on the command line."
+                    exit 1
+                }
+
+                sopc_design_file="$arg"
+            done
+
+            echo "$PN: Using SOPC design file $sopc_design_file found in $sopc_design_dir"
+            return
+        }
+
+        err "$PN: Can't find SOPC design file in $sopc_design_dir directory."
+        err "$PN: Looking for .sopcinfo or .swinfo files."
+        err "$PN: If you only have a .sopc file, re-generate your SOPC Builder"
+        err "$PN: system in version 8.0 or later to create a .sopcinfo file."
+        err "$PN: Specify SOPC design file or directory on the command line."
+        exit 1
+    fi
+}
+
+[[ $1 = "--help" ]] && {
+    usage echo false
+    exit 0
+}
+
+[[ $1 = "--extended-help" ]] && {
+    usage echo true
+    exit 0
+}
+
+[[ $# -lt 2 ]] && {
+    usage err false
+    exit 1
+}
+
+[[ -r "$default_tcl" ]] || {
+    err "$PN: Can't read default HAL Tcl file $default_tcl"
+    exit 1
+}
+
+[[ -r "$default_lwhal_tcl" ]] || {
+    err "$PN: Can't read default Lightweight HAL Tcl file $default_lwhal_tcl"
+    exit 1
+}
+
+# Get mandatory arguments.
+bsp_type=$1; shift
+bsp_dir=$1; shift
+
+# Optionally get sopc argument.
+case $1 in
+    --*)
+        ;;
+    *)   sopc_arg=$1; shift
+        ;;
+esac
+
+# Make sure BSP directory exists.
+[[ ! -d $bsp_dir ]] && {
+    mkdir -p $bsp_dir || {
+        err "$PN: Can't mkdir -p $bsp_dir"
+        exit 1
+    }
+}
+
+# Process optional arguments.
+# Look for that should only be passed to the default Tcl script.
+
+while [[ "$@" ]]; do
+    case $1 in
+        --silent | --verbose | --debug)
+        # Append these options to the arrays.
+            create_update_options[${#create_update_options[@]}]=$1
+            ;;
+
+        --log)
+            [[ $# -lt 2 ]] && {
+                err "Missing filename for $1 option."
+                err
+                usage err false
+                exit 1
+            }
+
+        # Add unique suffixes to log filename so that it doesn't
+        # get overwritten.  They are concatenated later in this script.
+            log_fname=$2
+            first_log_fname="${log_fname}.1st"
+            second_log_fname="${log_fname}.2nd"
+
+            create_update_options[${#create_update_options[@]}]=$1
+            create_update_options[${#create_update_options[@]}]=$first_log_fname
+
+            shift   # Skip over $2
+            ;;
+
+        --librarian-path)
+            [[ $# -lt 2 ]] && {
+                err "Missing path(s) for $1 option."
+                err
+                usage err false
+                exit 1
+            }
+
+            librarian_path=$2
+
+            create_update_options[${#create_update_options[@]}]=$1
+            create_update_options[${#create_update_options[@]}]=$librarian_path
+
+            shift   # Skip over $2
+            ;;
+
+        --default_stdio | --default_sys_timer | --default_memory_regions | --default_sections_mapping | --use_bootloader)
+            [[ $# -lt 2 ]] && {
+                err "Missing argument for $1 option."
+                err
+                usage err false
+                exit 1
+            }
+
+        # Strip off the -- prefix.
+            tcl_option_name=${1:2}
+            default_tcl_options[${#default_tcl_options[@]}]=$tcl_option_name
+            default_tcl_options[${#default_tcl_options[@]}]=$2
+
+            shift   # Skip over $2
+            ;;
+
+        --cmd)
+            [[ $# -lt 2 ]] && {
+                err "Missing argument for $1 option."
+                err
+                usage err false
+                exit 1
+            }
+
+            if [[ ($2 = "add_section_mapping") && ($# -ge 4) ]]; then
+            # Found a valid section mapping command.
+            # Pass this to the default Tcl script as a name/value pair.
+                default_tcl_options[${#default_tcl_options[@]}]="$2 $3=$4"
+
+                shift 3 # Skip over $2, $3, and $4
+            else
+            # Unknown commands are passed to nios2-bsp-create-settings.
+                create_update_options[${#create_update_options[@]}]=$1
+            fi
+            ;;
+
+        *)  # Unknown options are passed to nios2-bsp-create-settings.
+            create_update_options[${#create_update_options[@]}]=$1
+            ;;
+    esac
+
+    shift   # Skip over $1
+done
+
+# Before spawning other Nios II tools, reset IFS so that parameters get to
+# spawned tools delimited on whitespace.  This is required because
+# the bash array 'create_update_options' created by parsing script
+# options above may contain individual array elements with spaces that
+# separate the command from the arguments to that command.
+IFS="${DEFAULT_IFS}"
+
+if [ `echo $bsp_type| tr "[:upper:]" "[:lower:]"` = "lwhal" ]; then
+    default_tcl=$default_lwhal_tcl
+fi
+
+echo "$PN: Using $default_tcl to set system-dependent settings."
+
+settings_pname="$bsp_dir/settings.bsp"
+
+# If settings file already exists, then update it.  Otherwise, create it.
+if [[ -f $settings_pname ]]; then
+    echo "$PN: Updating existing BSP because $settings_pname exists."
+
+    # Updating. Make sure settings file is writable.
+    [[ ! -w $settings_pname ]] && {
+        err "$PN: $settings_pname exists but isn't writable so BSP can't be updated."
+        exit 1
+    }
+
+    if  [[ $sopc_arg ]]; then
+        set_sopc_design_file $sopc_arg
+
+        # Run update command.
+        echo "$PN: Running \"nios2-bsp-update-settings --settings $settings_pname --bsp-dir $bsp_dir --sopc $sopc_design_file --script $default_tcl ${default_tcl_options[@]} ${create_update_options[@]}"\"
+        nios2-bsp-update-settings --settings "$settings_pname" --bsp-dir $bsp_dir --sopc "$sopc_design_file" --script "$default_tcl"  ${default_tcl_options[@]} ${create_update_options[@]} || {
+            err "$PN: nios2-bsp-update-settings failed"
+            exit 1
+        }
+    else
+        # Run update command.
+        echo "$PN: Running \"nios2-bsp-update-settings --settings $settings_pname  --bsp-dir $bsp_dir --script $default_tcl ${default_tcl_options[@]} ${create_update_options[@]}"\"
+        nios2-bsp-update-settings --settings "$settings_pname" --bsp-dir $bsp_dir --script "$default_tcl" ${default_tcl_options[@]} ${create_update_options[@]} || {
+            err "$PN: nios2-bsp-update-settings failed"
+            exit 1
+        }
+    fi
+else
+    echo "$PN: Creating new BSP because $settings_pname doesn't exist."
+
+    set_sopc_design_file $sopc_arg
+
+    # Run create command.
+    echo "$PN: Running \"nios2-bsp-create-settings --sopc $sopc_design_file --type $bsp_type --settings $settings_pname --bsp-dir $bsp_dir --script $default_tcl ${default_tcl_options[@]} ${create_update_options[@]}"\"
+    nios2-bsp-create-settings --sopc "$sopc_design_file" --type $bsp_type --settings "$settings_pname" --bsp-dir $bsp_dir --script "$default_tcl" ${default_tcl_options[@]} ${create_update_options[@]} || {
+        err "$PN: nios2-bsp-create-settings failed"
+        exit 1
+    }
+fi
+
+exit 0

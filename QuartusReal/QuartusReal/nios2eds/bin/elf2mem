@@ -1,0 +1,62 @@
+#!/bin/sh
+
+PN="elf2mem";
+PB="       ";
+
+[ -z "$QUARTUS_ROOTDIR" ] && {
+    echo "$PN: QUARTUS_ROOTDIR environment variable not set"
+    exit 1
+}
+
+[ ! -d "$QUARTUS_ROOTDIR" ] && {
+    echo "$PN: Directory $QUARTUS_ROOTDIR doesn't exist"
+    echo "$PB     This directory is specified by the QUARTUS_ROOTDIR env variable"
+    exit 1
+}
+
+CYGWIN_PERL=${QUARTUS_ROOTDIR}/bin/cygwin/bin/perl.exe
+LINUX_PERL=${QUARTUS_ROOTDIR}/linux/perl/bin/perl
+SOLARIS_PERL=${QUARTUS_ROOTDIR}/solaris/perl/bin/perl
+
+if [ -f $CYGWIN_PERL ]; then
+    PERL=$CYGWIN_PERL
+elif [ -f $LINUX_PERL ]; then
+    PERL=$LINUX_PERL
+elif [ -f $SOLARIS_PERL ]; then
+    PERL=$SOLARIS_PERL
+else
+    echo "$PN: Can't find perl executable that comes with Quartus"
+    echo "$PB    Tried $CYGWIN_PERL, $LINUX_PERL, and $SOLARIS_PERL"
+    exit 1
+fi
+
+EUROPA=${QUARTUS_ROOTDIR}/sopc_builder/bin/europa
+
+[ ! -d $EUROPA ] && {
+    echo "$PN: Error: Europa Perl library directory not found"
+    echo "$PB    Should be in $EUROPA"
+    exit 1
+}
+
+PERLLIB=${QUARTUS_ROOTDIR}/sopc_builder/bin/perl_lib
+
+[ ! -d $PERLLIB ] && {
+    echo "$PN: Error: Quartus Perl library directory not found"
+    echo "$PB    Should be in $PERLLIB"
+    exit 1
+}
+
+[ -z "$SOPC_KIT_NIOS2" ] && {
+    echo "$PN: SOPC_KIT_NIOS2 environment variable not set"
+    echo "$PB     It should point to the Altera Nios II Kit directory"
+    exit 1
+}
+
+ELF2MEM_PL=$SOPC_KIT_NIOS2/bin/elf2mem.pl
+
+[ ! -f $ELF2MEM_PL ] && {
+    echo "$PN: Can't find $ELF2MEM_PL"
+    exit 1
+}
+
+$PERL -I$PERLLIB -I$EUROPA $SOPC_KIT_NIOS2/bin/elf2mem.pl "$@"

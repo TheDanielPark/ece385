@@ -1,0 +1,29 @@
+Quartus Prime Archive log --	D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/8bitserialprocessor_tmp_archive.qarlog
+
+Archive:	D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/8bitserialprocessor_tmp_archive.qar
+Date:		Fri Feb 14 15:11:13 2020
+Quartus Prime		18.1.0 Build 625 09/12/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/8bitserialprocessor.qpf
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/8bitserialprocessor.qsf
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/Control.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/HexDriver.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/Processor.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/Reg_4.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/Register_unit.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/Router.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/Synchronizers.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/compute.sv
+D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/testbench_8.sv
+d:/quartusreal/quartus/bin64/assignment_defaults.qdf
+	======= Total: 12 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Fri Feb 14 15:11:14 2020
+Source archive file:	D:/QuartusReal/ECE 385/ParkDaniel_SatoMasaki_Lab 4/8 bit serial processor/8bitserialprocessor_tmp_archive.qar
+Archive was extracted into	E:/danielp7_masakis2_8bitprocessor/
+		 - successfully.

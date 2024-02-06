@@ -1,0 +1,52 @@
+module control_unit_lc3 (
+		input logic 
+
+ );
+
+    // Declare signals curr_state, next_state of type enum
+    // with enum values of A, B, ..., S as the state values
+	 // Changed to 5 bits because we have 19 different states
+    enum logic [4:0] {A, B, C, D, E, F, G, H, I , J, K, L, M, N, O, P, Q, R, S}   curr_state, next_state; 
+
+	//updates flip flop, current state is the only one
+    always_ff @ (posedge Clk or posedge Reset)  
+    begin
+        if (Reset)  
+            curr_state <= A;
+        else 
+            curr_state <= next_state;
+    end
+
+    // Assign outputs based on state
+	always_comb
+   begin
+        
+		  next_state  = curr_state;	//required because I haven't enumerated all possibilities below
+        unique case (curr_state) 
+			//We made 19 states, 1 to run, 1 to clear A, then 16 for the steps of multiplication, then the finish step.
+            A :    if (Run) 				//start state
+                     next_state = B; //Go to the clearA/LoadB state
+							 
+            
+							  
+        endcase
+	end
+		  // Assign outputs based on ‘state’
+	always_comb
+	begin
+		case (curr_state) 
+	   	   
+					
+	   	   // default case to clear out all values
+	   	   default:  
+		      begin 
+				clearA = 1'b0;
+				Shift = 1'b0;
+				Clr_Ld = 1'b0;
+				Sub = 1'b0;
+				Add = 1'b0;
+		      end 
+		endcase
+	end
+
+endmodule
